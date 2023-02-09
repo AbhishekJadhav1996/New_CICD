@@ -3,17 +3,24 @@ pipeline {
          tools {
         maven "Maven"
         jdk "JDK11"
-    }          stages {
+    }          
+      stages {
          stage('Initialize'){
             steps{
                 echo "PATH = ${M2_HOME}/bin:${PATH}"
                 echo "M2_HOME = /opt/maven"
             }
         }
+                  stage('Validate'){
+                         steps{
+                           echo "VALIDATE"
+                           bat "mvn validate"
+                         }
+                  }        
                stage('Compile'){
             steps{
                 echo "COMPILE"
-             bat "mvn clean install"
+             bat "mvn compile"
             }
         }
         stage('test'){
@@ -30,6 +37,21 @@ pipeline {
                 }
             }
         }
+                  
+                      stage('Package'){
+            steps{
+                echo "PACKAGE"
+             bat "mvn package"
+            }
+        }
+                  
+                   stage('Install'){
+            steps{
+                echo "INSTALL   "
+             bat "mvn clean install"
+            }
+        }
+                  
         stage('Upload_Artifact') {
             steps {
                 script{
