@@ -45,4 +45,10 @@ pipeline{
                 }
             }
         }
+     post{
+        always {
+            jiraSendBuildInfo site: 'abhisheknewjirasite.atlassian.net', branch: 'C2-3-Home-Page'
+            }
+        }
 }
+
