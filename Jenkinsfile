@@ -1,5 +1,7 @@
 pipeline {
-         agent any
+         agent {
+                  label 'linux'
+         }
          tools {
                   maven "Maven"
                   jdk "JDK11"
@@ -34,45 +36,3 @@ steps {
 // use the SonarQube Scanner to analyze the project
 withSonarQubeEnv('SonarQube') {
      bat 'mvn sonar:sonar'
-}
-}
-}
-                  
-                      stage('Package'){
-            steps{
-                echo "PACKAGE"
-             bat "mvn package"
-            }
-        }
-                  
-                   stage('Install'){
-            steps{
-                echo "INSTALL   "
-             bat "mvn clean install"
-            }
-        }
-                  
-stage('Upload_Artifact') {
-steps {
-    script{
-def server = Artifactory.server 'artifactory'
-               def uploadSpec = """{
- "files": [
- {
-      "pattern": "target/*.jar",
-"target": "CI_2_POC/"
-}
-]
-}"""
-server.upload(uploadSpec)
-}
-}
-}
-}
-    
-           post {
-                 always {
-                     jiraSendBuildInfo site: 'abhisheknewjirasite.atlassian.net', branch: 'master'
-                 }
-             }
-        }
