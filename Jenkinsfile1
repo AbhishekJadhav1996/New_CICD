@@ -1,14 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
+        stage('validate') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'master']], userRemoteConfigs: [[url: 'https://github.com/AbhishekJadhav1996/CICD_Pipeline2.git']]])
+                echo 'VALIDATE'
+                sh 'mvn clean validate'
             }
         }
-        stage('Exec Maven') {
+        stage('Compile') {
             steps {
-                sh 'mvn clean install'
+                echo 'COMPILE'
+                sh 'mvn clean compile'
             }
         }
     }
