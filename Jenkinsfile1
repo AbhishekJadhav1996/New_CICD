@@ -1,8 +1,10 @@
 pipeline {
     agent any
-    tools {
-            maven 'Maven'
-    }
+ tools {
+  jdk 'JDK11'
+  maven 'Maven'
+}
+
     stages {
         stage('validate') {
             steps {
