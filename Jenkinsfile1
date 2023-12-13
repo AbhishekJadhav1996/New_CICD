@@ -2,19 +2,18 @@ pipeline {
     agent any
     tools {
             maven 'Maven'
-            jdk 'JDK11'
     }
     stages {
         stage('validate') {
             steps {
                 echo 'VALIDATE'
-                sh 'mvn clean validate'
+                sh 'mvn validate'
             }
         }
         stage('Compile') {
             steps {
                 echo 'COMPILE'
-                sh 'mvn clean compile'
+                sh 'mvn compile'
             }
         }
     }
