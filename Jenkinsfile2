@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    
+    tools {
+        jdk 'JDK11'
+        maven 'Maven'
+    }
+
+    stages {
+        stage('Validate') {
+            steps {
+                echo 'VALIDATE'
+                bat 'mvn clean validate'
+            }
+        }
+        stage('Compile') {
+            steps {
+                echo 'COMPILE'
+                bat 'mvn compile'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'TEST'
+                bat 'mvn test'
+            }
+        }
+        stage('Package') {
+            steps {
+                echo 'PACKAGE'
+                bat 'mvn package'
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                echo 'INTEGRATION TEST'
+                bat 'mvn verify'
+            }
+        }
+        stage('Verify') {
+            steps {
+                echo 'VERIFY'
+                bat 'mvn verify'
+            }
+        }
+        stage('Install') {
+            steps {
+                echo 'INSTALL'
+                bat 'mvn install'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'DEPLOY'
+                bat 'mvn deploy'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
