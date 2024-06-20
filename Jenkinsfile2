@@ -49,12 +49,7 @@ pipeline {
                 bat 'mvn install'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'DEPLOY'
-                bat 'mvn deploy'
-            }
-        }
+        
     }
 
     post {
